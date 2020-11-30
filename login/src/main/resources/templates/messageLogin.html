@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="webjars/bootstrap/4.5.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/bootstrap-table/1.16.0/bootstrap.min.css">
+    <script src="webjars/jquery/3.5.1/jquery.js"></script>
+    <script src="webjars/bootstrap-table/1.16.0/bootstrap-table.js"></script>
+    <script src="webjars/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.js"></script>
+    <title>主页面</title>
+</head>
+<body>
+    <div>
+        <div class="container">
+            <form class="form-check" action="#">
+                <label class="sr-only">手机号码</label>
+                <input type="text" class="form-control" placeholder="手机号码" id="mobile" required="required" vali autofocus="">
+                <span class="btn btn-dark" id="sendSms" type="button" onclick="sendSms(this)" >获取验证码</span>
+
+                <button class="btn btn-info" id="login" type="submit">登录</button>
+
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        //先销毁表格
+        // $("#table").bootstrapTable('destory');
+        $("#send").click(function (){
+            let mobile = $("#mobile").val();
+            $.ajax({
+                url:"/api/user/sendSms",
+                method:"get",
+                data:{
+                  mobile:mobile
+                },
+                success:function (res){
+                    console.log(res)
+                }
+            })
+        })
+
+        $("#login").click(function (){
+            $.ajax({
+                url:"/api/user/smsLogin",
+                method:"get",
+                success:function (res){
+                    console.log(res)
+                }
+            })
+        })
+
+
+    })
+    // $("#sendSms").click(function (){
+    //     alert()
+    //     let btn = $("#sendSms");
+    //     let wait = 60;
+    //     if (wait == 0) {
+    //         btn.disabled = false
+    //     }else{
+    //         btn.disabled = true
+    //         btn.innerHTML = "秒后可以重新发送"
+    //         setTimeout(function (){
+    //
+    //         },1000)
+    //         $("#sendSms").val("")
+    //     }
+    // })
+    /**
+     * 发送验证码
+     * @param btn
+     */
+    function sendSms(btn) {
+        time(btn)
+    }
+    // 倒计时时间
+    let wait = 10
+    /**
+     * 倒计时函数
+     * @param btn
+     */
+    function time(btn){
+        if (wait == 0) {
+            // 添加属性onclick
+            btn.setAttribute("onclick","sendSms(this)")
+            btn.innerHTML = "获取验证码"
+            wait = 10
+            btn.disabled = false
+
+        }else{
+            // 移除属性onclick
+            btn.removeAttribute("onclick")
+            btn.innerHTML = wait+"秒后可以重新发送"
+            // 递减操作
+            wait--;
+            btn.disabled = true
+            setTimeout(function (){
+                time(btn)
+            },1000)
+        }
+        sendMessage();
+    }
+
+    /**
+     * 请求后台发送短信
+     */
+    function sendMessage(){
+        let mobile = $("#mobile").val();
+        $.ajax({
+            url:"/api/user/sendSms",
+            method:"get",
+            data:{
+                mobile:mobile
+            },
+            success:function (res){
+                console.log(res)
+            }
+        })
+    }
+
+
+</script>
+</body>
+</html>

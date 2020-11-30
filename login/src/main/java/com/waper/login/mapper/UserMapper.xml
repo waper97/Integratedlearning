@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.waper.login.mapper.UserMapper">
+
+    <resultMap id="base_resultMap" type="com.waper.login.model.User">
+        <id property="id" column="id" />
+        <result column="name" property="name"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="mobile" property="mobile"/>
+        <result column="address" property="address"/>
+        <result column="sex" property="sex"/>
+        <result column="status" property="status"/>
+        <result column="createTime" property="createTime"/>
+        <result column="profilePath" property="profilePath"/>
+    </resultMap>
+
+    <sql id="base_sql" >
+        id,name,account,password,mobile,address,sex,status,createTime
+    </sql>
+
+    <sql id="show_sql" >
+        id,name,account,mobile,address,sex,status,createTime
+    </sql>
+
+
+    <select id="getUserInfo" parameterType="map" resultType="com.waper.login.model.User">
+         select
+            <include refid="show_sql"/>
+        from user where status =0 and  account=#{account} and password=#{password}
+    </select>
+
+    <select id="listUserInfo" parameterType="map" resultType="com.waper.login.model.User">
+         select
+            <include refid="show_sql"/>
+        from user where status =0
+    </select>
+
+    <select id="getUserInfoById" parameterType="int" resultType="com.waper.login.model.User">
+        select
+            <include refid="show_sql"/>
+        from user
+        where status =0
+        and id =#{id}
+    </select>
+
+
+
+    <select id="getUserByAccount" parameterType="string" resultType="com.waper.login.model.User">
+        select * from user  where account =#{account} and status =0
+    </select>
+
+    <update id="updateUserInfo" parameterType="com.waper.login.model.User">
+        update user
+        set name =#{name}
+            <if test="sex != null">
+                ,sex =#{sex}
+            </if>
+            <if test="mobile != null and mobile!='' ">
+                ,mobile =#{mobile}
+            </if>
+            <if test="address != null and address!='' ">
+                ,address =#{address}
+            </if>
+            <if test="password != null and password!='' ">
+                ,password =#{password}
+            </if>
+        where id =#{id}
+
+    </update>
+
+</mapper>
