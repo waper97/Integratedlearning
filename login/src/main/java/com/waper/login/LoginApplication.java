@@ -4,6 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author wangpeng
@@ -18,6 +19,11 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 /**
  * servcelet组件扫描
  */
+
+/**
+ * 开启swagger
+ */
+@EnableSwagger2
 @ServletComponentScan
 public class LoginApplication {
 

@@ -5,6 +5,8 @@ import com.waper.login.service.RedisService;
 import com.waper.login.service.UserService;
 import com.waper.login.util.JwtUtil;
 import com.zhenzi.sms.ZhenziSmsClient;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
@@ -27,6 +29,7 @@ import java.util.Map;
  * @Author wangpeng
  * @Date 2020/10/20 15:47
  */
+@Api(value = "用户Controller",tags = "用户操作")
 @RestController
 @RequestMapping("api/user")
 public class UserController extends BaseController {
@@ -41,7 +44,7 @@ public class UserController extends BaseController {
 
     @Resource
     RedisService redisService;
-
+    @ApiOperation(value = "查询用户信息",httpMethod = "POST")
     @PostMapping("login")
     public Object userLogin(String account, String password){
 
