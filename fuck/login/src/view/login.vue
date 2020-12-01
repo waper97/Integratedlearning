@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import {login} from "@/api/test";
+
 export default {
   name: "login",
   data(){
@@ -57,11 +59,19 @@ export default {
       // 为表单绑定验证功能
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
-          this.$axios.post({
-            url:'api/user/login'
-          }).then(res =>{
-
+          // // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
+          // this.$axios.post({
+          //   url:'api/user/login'
+          // }).then(res =>{
+          //
+          // })
+          let params = {...this.form}
+          console.log(params)
+          login(params).then(res =>{
+            debugger;
+              console.log(res)
+          }).error(e =>{
+             console.log(e)
           })
           this.$router.push("/main");
         } else {

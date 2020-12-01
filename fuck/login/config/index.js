@@ -11,10 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // 'login':{
-      //   target:'http://localhost:5555',
-      //   changeOrigin:true
-      // }
+      '/apis': {
+        target: 'http://localhost:5555', // 接口域名
+        changeOrigin: true, //是否跨域
+        // secure:"false",
+        pathRewrite: {
+          '^/apis': '' //需要rewrite重写的, (重写的路径)
+        }
+      }
 
     },
 
