@@ -1,16 +1,18 @@
 package com.waper.login.controller;
 
 import com.waper.login.model.ResponseInfo;
+import io.swagger.annotations.Api;
 import org.springframework.util.DigestUtils;
 
 import java.io.IOException;
 
 /**
  * @ClassName BaseController
- * @Description TODO
+ * @Description 基础操作
  * @Author wangpeng
  * @Date 2020/10/20 17:53
  */
+@Api(value = "基础操作，其他类基于它")
 public class BaseController {
 
 

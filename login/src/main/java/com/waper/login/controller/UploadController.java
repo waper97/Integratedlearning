@@ -1,6 +1,7 @@
 package com.waper.login.controller;
 
 
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ClassUtils;
@@ -20,6 +21,7 @@ import java.io.IOException;
  * @Author wangpeng
  * @Date 2020/11/24 10:37
  */
+@Api(value = "文件上传控制器")
 //@RequestMapping("api/upload")
 @RestController
 public class UploadController extends BaseController {

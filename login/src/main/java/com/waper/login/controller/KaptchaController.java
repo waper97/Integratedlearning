@@ -1,5 +1,7 @@
 package com.waper.login.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import java.util.Random;
  * @Author wangpeng
  * @Date 2020/11/30 11:11
  */
+@Api(value = "验证码控制器")
 @RestController
 public class KaptchaController extends BaseController{
 
@@ -41,6 +44,7 @@ public class KaptchaController extends BaseController{
      * 生成随机验证码
      * @param response
      */
+    @ApiOperation(value = "生成验证码")
     @RequestMapping("createKaptcha")
     public  void createKaptcha(HttpServletResponse response ){
         // 设置相应类型，告诉浏览器输出的内容为图片

@@ -1,5 +1,7 @@
 package com.waper.login.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Author wangpeng
  * @Date 2020/11/6 10:03
  */
+@Api("重定向控制器")
 @Controller
 public class RedirectController {
     /**

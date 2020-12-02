@@ -20,10 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * servcelet组件扫描
  */
 
-/**
- * 开启swagger
- */
-@EnableSwagger2
 @ServletComponentScan
 public class LoginApplication {
 

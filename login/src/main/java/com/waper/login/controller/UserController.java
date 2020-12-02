@@ -5,8 +5,7 @@ import com.waper.login.service.RedisService;
 import com.waper.login.service.UserService;
 import com.waper.login.util.JwtUtil;
 import com.zhenzi.sms.ZhenziSmsClient;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
@@ -29,7 +28,7 @@ import java.util.Map;
  * @Author wangpeng
  * @Date 2020/10/20 15:47
  */
-@Api(value = "用户Controller",tags = "用户操作")
+@Api("用户Controller")
 @RestController
 @RequestMapping("api/user")
 public class UserController extends BaseController {
@@ -44,7 +43,12 @@ public class UserController extends BaseController {
 
     @Resource
     RedisService redisService;
-    @ApiOperation(value = "查询用户信息",httpMethod = "POST")
+    @ApiOperation(value = "用户登录接口",httpMethod = "POST",notes = "用户登录")
+    @ApiImplicitParams(
+            { @ApiImplicitParam(name = "account", value = "账号入参", dataType = "String", required = true),
+                    @ApiImplicitParam(name = "password", value = "密码入参", dataType = "String", required = true)
+            }
+    )
     @PostMapping("login")
     public Object userLogin(String account, String password){
 
@@ -69,7 +73,7 @@ public class UserController extends BaseController {
      * @param mobile 电话号码
      * @return
      */
-    @RequestMapping("sendSms")
+    @GetMapping("sendSms")
     public Object  sendSms(String mobile, HttpSession session) throws Exception {
         if (StringUtils.isEmpty(mobile)) {
             return faild("手机号码不能为空!");
@@ -88,7 +92,7 @@ public class UserController extends BaseController {
         return success("发送成功!");
     }
 
-    @RequestMapping("smsLogin")
+    @GetMapping("smsLogin")
     public Object  smsLogin(String mobile, String sms,HttpSession session) throws Exception {
         if (StringUtils.isEmpty(mobile) && StringUtils.isEmpty(sms)) {
             return faild("手机号码或短信验证码不能为空!");
@@ -103,6 +107,7 @@ public class UserController extends BaseController {
      * @return
      */
     @PostMapping("updateInfo")
+    @ApiOperation(value = "更新用户信息接口", notes = "更新用户信息")
     public Object updateUserInfo(User user){
         if (StringUtils.isEmpty(user.getId())) {
             return faild("id不能为空!");
@@ -124,6 +129,8 @@ public class UserController extends BaseController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "根据id获取用户信息接口", notes ="根据id获取用户信息")
+    @ApiImplicitParam(name = "id",value = "id",dataType = "Integer")
     @GetMapping("getUserInfoById")
     public Object getUserInfoById(Integer id){
         if (id == null) {
@@ -143,6 +150,13 @@ public class UserController extends BaseController {
      * @param newPassword
      * @return
      */
+    @ApiOperation(value = "修改密码接口", notes ="修改密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "id",dataType = "String"),
+            @ApiImplicitParam(name = "account",value = "账号",dataType = "String"),
+            @ApiImplicitParam(name = "olderPassword",value = "旧密码",dataType = "String"),
+            @ApiImplicitParam(name = "newPassword",value = "新密码",dataType = "String")
+    })
     @PostMapping("updatePassword")
     public Object updatePassword(Integer id ,String account ,String olderPassword, String newPassword){
         if (StringUtils.isEmpty(id)) {
@@ -170,14 +184,17 @@ public class UserController extends BaseController {
         return success("修改成功!");
     }
 
-
-    @RequestMapping("test")
+    @ApiOperation(value = "测试接口",notes = "测试")
+    @GetMapping("test")
     public String test(){
         System.out.println("test");
+
+
+
         return "test";
     }
-
-    @RequestMapping("listUserInfo")
+    @ApiOperation(value = "获取用户列表接口",notes = "获取用户列表")
+    @GetMapping("listUserInfo")
     public Object listUser(){
         List<User> list = userService.listUserInfo();
         return successData("获取成功",list);

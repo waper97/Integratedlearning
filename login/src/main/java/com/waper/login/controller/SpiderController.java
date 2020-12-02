@@ -1,6 +1,7 @@
 package com.waper.login.controller;
 
 import com.waper.login.model.Type;
+import io.swagger.annotations.Api;
 import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,6 +27,7 @@ import java.util.UUID;
  * @Author wangpeng
  * @Date 2020/11/26 17:26
  */
+@Api(value = "爬虫控制器")
 public class SpiderController extends BaseController{
 
 
